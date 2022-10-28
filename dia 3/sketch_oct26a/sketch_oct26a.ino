@@ -10,7 +10,7 @@
 #endif
 #include <Firebase_ESP_Client.h>
 
-//integrador de sensores + firebase
+//Credenciales
 #include "password.h"
 
 //Provide the token generation process info.
