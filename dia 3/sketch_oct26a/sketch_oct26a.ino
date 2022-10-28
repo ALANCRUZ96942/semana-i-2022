@@ -42,8 +42,12 @@ unsigned long sendDataPrevMillis = 0;
 //variables a mandar
 int count = 0;
 bool signupOK = false;
+//String 
+String sValue;
 int intValue;
 //bool boolValue;
+//String
+String pValue;
 int pwmValue;
 
 
@@ -370,7 +374,7 @@ void loop() {
 
 
         // humidity
-        if (Firebase.RTDB.setInt(&fbdo, "test/humidity", h))
+        if (Firebase.RTDB.setInt(&fbdo, "ejemplo/humidity", h))
         {
             Serial.println("PASSED");
             Serial.println("PATH: " + fbdo.dataPath());
@@ -385,7 +389,7 @@ void loop() {
         //count++;
     
         // Write an Float number on the database path test/float
-        if (Firebase.RTDB.setFloat(&fbdo, "test/distance", distanceCm))
+        if (Firebase.RTDB.setFloat(&fbdo, "ejemplo/distance", distanceCm))
         {
             Serial.println("PASSED");
             Serial.println("PATH: " + fbdo.dataPath());
@@ -397,7 +401,7 @@ void loop() {
             Serial.println("REASON: " + fbdo.errorReason());
         }
                 // Write an Float number on the database path test/float
-        if (Firebase.RTDB.setFloat(&fbdo, "test/move", pirValue))
+        if (Firebase.RTDB.setFloat(&fbdo, "ejemplo/move", pirValue))
         {
             Serial.println("PASSED");
             Serial.println("PATH: " + fbdo.dataPath());
@@ -413,11 +417,15 @@ void loop() {
 
         
         //lee primer dato
-        if (Firebase.RTDB.getInt(&fbdo, "/test/digito")) 
+       if (Firebase.RTDB.getString(&fbdo, "/ejemplo/digito")) 
+        //if (Firebase.RTDB.getInt(&fbdo, "/test/digito")) 
         {
-            if (fbdo.dataType() == "int") 
+             if (fbdo.dataType() == "string")
+            //if (fbdo.dataType() == "int") 
             {
-                intValue = fbdo.intData();
+                sValue = fbdo.stringData();
+                //intValue = fbdo.intData();
+                intValue = sValue.toInt();
                 segment_display(intValue);
                 Serial.println(intValue);
             }
@@ -427,11 +435,15 @@ void loop() {
             Serial.println(fbdo.errorReason());
         }
         //lee segundo dato
-        if (Firebase.RTDB.getInt(&fbdo, "/test/pwm")) 
+        //if (Firebase.RTDB.getInt(&fbdo, "/ejemplo/pwm")) 
+        if (Firebase.RTDB.getString(&fbdo, "/ejemplo/pwm")) 
         {
-            if (fbdo.dataType() == "int") 
+           if (fbdo.dataType() == "string") 
+            //if (fbdo.dataType() == "int") 
             {
-                pwmValue = fbdo.intData();
+                //pwmValue = fbdo.intData();
+                pValue = fbdo.stringData();
+                pwmValue = pValue.toInt();
                 ledcWrite(ledChannel,pwmValue); 
                 Serial.println(pwmValue);
             }
